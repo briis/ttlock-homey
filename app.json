@@ -1,0 +1,48 @@
+{
+  "id": "com.yourname.appname",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "name": {
+    "en": "App Name"
+  },
+  "description": {
+    "en": "A short description of what your app does."
+  },
+  "category": [
+    "appliances"
+  ],
+  "brandColor": "#1DA1F2",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": ""
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/yourname/yourapp/issues"
+  },
+  "source": "https://github.com/yourname/yourapp",
+  "support": "https://github.com/yourname/yourapp/issues",
+  "drivers": [],
+  "flow": {
+    "triggers": [],
+    "conditions": [],
+    "actions": []
+  }
+}

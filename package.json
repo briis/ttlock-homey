@@ -1,0 +1,22 @@
+{
+  "name": "homey-app-template",
+  "version": "1.0.0",
+  "description": "A template for developing Homey apps",
+  "main": "app.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "validate": "homey app validate",
+    "validate:publish": "homey app validate --level publish",
+    "build": "homey app build",
+    "app:run": "homey app run",
+    "app:install": "homey app install",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-athom": "^3.1.0",
+    "homey": "^3.3.0"
+  }
+}
