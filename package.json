@@ -5,6 +5,9 @@
   "main": "app.js",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "validate": "homey app validate",
     "validate:publish": "homey app validate --level publish",
@@ -13,6 +16,9 @@
     "app:install": "homey app install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "homey-oauth2app": "^3.7.2"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

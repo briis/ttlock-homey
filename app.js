@@ -1,13 +1,15 @@
 'use strict';
 
-const Homey = require('homey');
+const { OAuth2App } = require('homey-oauth2app');
 
-class App extends Homey.App {
+const TTLockOAuth2Client = require('./lib/TTLockOAuth2Client');
 
-  async onInit() {
-    this.log('App has been initialized');
+module.exports = class TTLockApp extends OAuth2App {
+
+  static OAUTH2_CLIENT = TTLockOAuth2Client;
+
+  async onOAuth2Init() {
+    this.log('TTLock app has been initialized');
   }
 
-}
-
-module.exports = App;
+};

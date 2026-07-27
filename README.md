@@ -1,37 +1,42 @@
-# Homey App Template
+# TTLock for Homey
 
-A starter template for building [Homey](https://homey.app) apps with the
-[Homey Apps SDK v3](https://apps.developer.homey.app/).
+A [Homey](https://homey.app) app for [TTLock](https://www.ttlock.com/) smart locks, talking to
+TTLock's cloud API (the same API used by [hass-ttlock](https://github.com/jbergler/hass-ttlock)
+for Home Assistant). v1 supports locking/unlocking and battery level, via polling.
 
-Click **Use this template** on GitHub to create a new repository from this one.
+## Setup
 
-## Getting started
-
-1. Create a new repo from this template and clone it.
-2. Install the Homey CLI dependencies:
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Rename the app: search the project for the placeholders below and replace them with your own values.
-
-   | Placeholder | Location | Replace with |
-   |---|---|---|
-   | `com.yourname.appname` | `app.json` (`id`) | your app's unique ID (reverse domain notation) |
-   | `App Name` | `app.json` (`name.en`) | your app's display name |
-   | `Your Name` / `you@example.com` | `app.json` (`author`) | your name and email |
-   | `yourname/yourapp` | `app.json` (`bugs`, `source`, `support`) | your GitHub repo path |
-   | `homey-app-template` | `package.json` (`name`) | your app's package name |
-
-4. Replace `assets/icon.svg` and the generated images in `assets/images/` with your own app icon
-   (run `homey app build` after changing the SVG to regenerate the PNGs).
-5. Log in to the Homey CLI and start development:
+2. Register a TTLock cloud application at [open.ttlock.com/manager](https://open.ttlock.com/manager)
+   to get a `client_id`/`client_secret` (manual approval, can take a few days). This is a
+   **developer application**, separate from your TTLock mobile app account.
+3. Copy `env.json.example` to `env.json` and fill in `TTLOCK_CLIENT_ID`/`TTLOCK_CLIENT_SECRET`
+   from step 2.
+4. Log in to the Homey CLI and start development:
 
    ```bash
    npx homey login
    npx homey app run
    ```
+
+5. Add a "Lock" device in the Homey app/companion. When pairing, log in with your **TTLock mobile
+   app account** username/password (not the open.ttlock.com developer account) — the app fetches
+   the list of locks on that account via `lock/list`.
+
+Still using placeholder values from the original template — replace before publishing:
+
+| Placeholder | Location | Replace with |
+|---|---|---|
+| `com.yourname.appname` | `app.json` (`id`) | your app's unique ID (reverse domain notation) |
+| `Your Name` / `you@example.com` | `app.json` (`author`) | your name and email |
+| `yourname/yourapp` | `app.json` (`bugs`, `source`, `support`) | your GitHub repo path |
+| `homey-app-template` | `package.json` (`name`) | your app's package name |
+| `assets/icon.svg`, `drivers/lock/assets/icon.svg` and their generated `images/` | app/driver icon | your own artwork (run `homey app build` after changing an SVG to regenerate the PNGs) |
 
 ## Project structure
 

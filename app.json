@@ -1,5 +1,5 @@
 {
-  "id": "com.yourname.appname",
+  "id": "com.briis.ttlock",
   "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
@@ -8,13 +8,15 @@
     "cloud"
   ],
   "name": {
-    "en": "App Name"
+    "en": "TTLock",
+    "da": "TTLock"
   },
   "description": {
-    "en": "A short description of what your app does."
+    "en": "Control and monitor your TTLock smart locks",
+    "da": "Styr og overvåg dine TTLock smarte låse"
   },
   "category": [
-    "appliances"
+    "security"
   ],
   "brandColor": "#1DA1F2",
   "permissions": [],
@@ -24,8 +26,8 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "Your Name",
-    "email": "you@example.com"
+    "name": "Bjarne Riis",
+    "email": "bjarne@briis.com"
   },
   "contributing": {
     "donate": {
@@ -35,11 +37,67 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/yourname/yourapp/issues"
+    "url": "https://github.com/briis/ttlock-homey/issues"
   },
-  "source": "https://github.com/yourname/yourapp",
-  "support": "https://github.com/yourname/yourapp/issues",
-  "drivers": [],
+  "source": "https://github.com/briis/ttlock-homey",
+  "support": "https://github.com/briis/ttlock-homey/issues",
+  "drivers": [
+    {
+      "id": "lock",
+      "name": {
+        "en": "Lock",
+        "da": "Lås"
+      },
+      "class": "lock",
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "capabilities": [
+        "locked",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "OTHER"
+        ]
+      },
+      "images": {
+        "small": "/drivers/lock/assets/images/small.png",
+        "large": "/drivers/lock/assets/images/large.png",
+        "xlarge": "/drivers/lock/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials"
+        }
+      ]
+    }
+  ],
   "flow": {
     "triggers": [],
     "conditions": [],
