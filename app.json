@@ -1,7 +1,7 @@
 {
   "id": "com.briis.ttlock",
-  "version": "1.0.1",
-  "compatibility": ">=5.0.0",
+  "version": "1.1.1",
+  "compatibility": ">=12.2.0",
   "sdk": 3,
   "platforms": [
     "local",
@@ -34,9 +34,9 @@
       "paypal": {
         "username": "bjarne@briis.com"
       },
-       "githubSponsors": {
-         "username": "briis"
-       }
+      "githubSponsors": {
+        "username": "briis"
+      }
     }
   },
   "bugs": {
@@ -62,7 +62,13 @@
       "capabilities": [
         "locked",
         "measure_battery",
-        "alarm_battery"
+        "alarm_battery",
+        "measure_signal_strength",
+        "autolock_enabled",
+        "lock_sound_enabled",
+        "passage_mode_enabled",
+        "last_operator",
+        "last_trigger"
       ],
       "energy": {
         "batteries": [
@@ -102,9 +108,90 @@
       ]
     }
   ],
+  "capabilities": {
+    "autolock_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Auto Lock",
+        "da": "Automatisk lås"
+      },
+      "desc": {
+        "en": "Whether the lock automatically locks itself a few seconds after being unlocked",
+        "da": "Om låsen automatisk låser sig selv nogle sekunder efter at være blevet låst op"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle"
+    },
+    "lock_sound_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Lock Sound",
+        "da": "Låselyd"
+      },
+      "desc": {
+        "en": "Whether the lock plays a sound when operated",
+        "da": "Om låsen afspiller en lyd, når den betjenes"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle"
+    },
+    "last_operator": {
+      "type": "string",
+      "title": {
+        "en": "Last Operator",
+        "da": "Sidste bruger"
+      },
+      "desc": {
+        "en": "Who last locked or unlocked the lock, from the most recent webhook event",
+        "da": "Hvem der senest låste eller låste låsen op, fra den seneste webhook-hændelse"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/last_operator.svg"
+    },
+    "last_trigger": {
+      "type": "string",
+      "title": {
+        "en": "Last Trigger",
+        "da": "Seneste hændelse"
+      },
+      "desc": {
+        "en": "What triggered the most recent lock event, e.g. \"unlock by app\" or \"auto lock\"",
+        "da": "Hvad der udløste den seneste hændelse, f.eks. \"unlock by app\" eller \"auto lock\""
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/last_trigger.svg"
+    },
+    "passage_mode_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Passage Mode",
+        "da": "Gennemgangstilstand"
+      },
+      "desc": {
+        "en": "Whether passage mode (the lock stays unlocked) is enabled",
+        "da": "Om gennemgangstilstand (låsen forbliver ulåst) er aktiveret"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/passage_mode.svg"
+    }
+  },
   "flow": {
     "triggers": [],
     "conditions": [],
     "actions": []
+  },
+  "api": {
+    "getWebhookUrl": {
+      "method": "GET",
+      "path": "/webhook-url"
+    }
   }
 }

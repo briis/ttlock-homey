@@ -15,8 +15,14 @@ except as described below):
 - An OAuth2 access token and refresh token for your TTLock account,
   obtained during pairing
 - The lock ID and name/alias you selected while pairing
-- The current lock state (locked/unlocked) and battery percentage, shown
-  as the device's capability values, refreshed every 60 seconds
+- The current lock state (locked/unlocked), battery percentage, gateway
+  signal strength, door sensor state (if your lock has one), auto-lock
+  and lock-sound settings, and passage-mode status, shown as the
+  device's capability values and refreshed every 5 minutes
+- The username and a human-readable description of whoever last
+  locked/unlocked the door ("Last Operator"/"Last Trigger"), if you've
+  wired up the optional webhook (see the README) — otherwise these stay
+  blank, since TTLock only reports this via the webhook, not polling
 
 Your TTLock username and password are used once, during pairing, to
 obtain the OAuth2 token described above (see next section) — they are
@@ -31,14 +37,26 @@ in plain text) are sent once to TTLock's cloud API
 
 After pairing, the app talks to that same TTLock cloud API to:
 
-- Poll each paired lock's state and battery level, once every 60 seconds
-- Send lock/unlock commands when triggered from the Homey app, a flow,
-  or a connected voice assistant
+- Poll each paired lock's state, battery, gateway signal, and settings, once
+  every 5 minutes
+- Send lock/unlock, auto-lock, and lock-sound commands when triggered from
+  the Homey app, a flow, or a connected voice assistant
 
 Every request carries your personal access token plus the `client_id`/
 `client_secret` of your own TTLock OAuth app, entered in this app's
 Settings — and nothing else: no other Homey identifiers, no location
 data, no analytics payload.
+
+If you set up the optional webhook, TTLock's cloud sends lock/unlock events
+directly to a per-install URL (`https://webhooks.athom.com/webhook/...`)
+that only you see (in this app's Settings) and only you paste into your own
+TTLock application's callback field. Homey's webhook relay authenticates the
+*app* to receive these callbacks, but TTLock's own payload has no signature
+or secret of its own — the same lack of verification as the reference Home
+Assistant integration this app is modeled on. In practice this means anyone
+who obtained your specific webhook URL could send this app a fake lock
+event; they could not use it to control your lock, only to make Homey think
+a benign event happened.
 
 The app makes no other outbound requests. It doesn't use analytics,
 crash reporting, or any third-party tracking service, and it doesn't

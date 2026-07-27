@@ -26,6 +26,14 @@
     button {
       margin-top: 20px;
     }
+    hr {
+      margin-top: 28px;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+    input[readonly] {
+      background: #f2f2f2;
+    }
   </style>
 </head>
 <body>
@@ -45,6 +53,17 @@
 
   <button id="save" class="homey-button-primary-full">Save</button>
 
+  <hr>
+
+  <h2 id="webhookTitle">Real-time updates</h2>
+  <p class="hint" id="webhookHint">
+    Paste this URL into your TTLock application's callback URL field at
+    <a href="https://open.ttlock.com/manager" target="_blank" rel="noopener">open.ttlock.com/manager</a>
+    to get near-instant lock/unlock updates, instead of waiting for the next poll.
+  </p>
+  <input type="text" id="webhookUrl" readonly>
+  <button id="copyWebhookUrl">Copy</button>
+
   <script type="text/javascript">
     function onHomeyReady(Homey) {
       const strings = {
@@ -54,6 +73,10 @@
           clientSecret: 'Client Secret',
           save: 'Save',
           saved: 'Saved',
+          webhookTitle: 'Real-time updates',
+          webhookUnavailable: 'Not available in this build.',
+          copy: 'Copy',
+          copied: 'Copied!',
         },
         da: {
           title: 'TTLock OAuth-app',
@@ -61,6 +84,10 @@
           clientSecret: 'Klient-hemmelighed',
           save: 'Gem',
           saved: 'Gemt',
+          webhookTitle: 'Opdateringer i realtid',
+          webhookUnavailable: 'Ikke tilgængelig i denne build.',
+          copy: 'Kopiér',
+          copied: 'Kopieret!',
         },
       };
 
@@ -70,6 +97,8 @@
         document.getElementById('clientIdLabel').textContent = t.clientId;
         document.getElementById('clientSecretLabel').textContent = t.clientSecret;
         document.getElementById('save').textContent = t.save;
+        document.getElementById('webhookTitle').textContent = t.webhookTitle;
+        document.getElementById('copyWebhookUrl').textContent = t.copy;
 
         document.getElementById('save').addEventListener('click', () => {
           const clientId = document.getElementById('clientId').value.trim();
@@ -83,6 +112,23 @@
               Homey.alert(t.saved);
             });
           });
+        });
+
+        Homey.api('GET', '/webhook-url', (apiErr, url) => {
+          const webhookUrlEl = document.getElementById('webhookUrl');
+          if (apiErr || !url) {
+            webhookUrlEl.value = t.webhookUnavailable;
+            document.getElementById('copyWebhookUrl').disabled = true;
+            return;
+          }
+          webhookUrlEl.value = url;
+        });
+
+        document.getElementById('copyWebhookUrl').addEventListener('click', () => {
+          const webhookUrlEl = document.getElementById('webhookUrl');
+          webhookUrlEl.select();
+          document.execCommand('copy');
+          Homey.alert(t.copied);
         });
       });
 
