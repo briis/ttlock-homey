@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 0 16px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      margin-top: 4px;
+    }
+    p.hint {
+      color: #666;
+      font-size: 0.9em;
+    }
+    button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="title">TTLock OAuth App</h2>
+  <p class="hint" id="hint">
+    Register your own application at
+    <a href="https://open.ttlock.com/manager" target="_blank" rel="noopener">open.ttlock.com/manager</a>
+    to get a Client ID and Client Secret, then enter them below before pairing a lock. See the
+    README for details.
+  </p>
+
+  <label id="clientIdLabel" for="clientId">Client ID</label>
+  <input type="text" id="clientId" autocomplete="off">
+
+  <label id="clientSecretLabel" for="clientSecret">Client Secret</label>
+  <input type="password" id="clientSecret" autocomplete="off">
+
+  <button id="save" class="homey-button-primary-full">Save</button>
+
+  <script type="text/javascript">
+    function onHomeyReady(Homey) {
+      const strings = {
+        en: {
+          title: 'TTLock OAuth App',
+          clientId: 'Client ID',
+          clientSecret: 'Client Secret',
+          save: 'Save',
+          saved: 'Saved',
+        },
+        da: {
+          title: 'TTLock OAuth-app',
+          clientId: 'Klient-ID',
+          clientSecret: 'Klient-hemmelighed',
+          save: 'Gem',
+          saved: 'Gemt',
+        },
+      };
+
+      Homey.getLanguage((err, language) => {
+        const t = strings[language] || strings.en;
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('clientIdLabel').textContent = t.clientId;
+        document.getElementById('clientSecretLabel').textContent = t.clientSecret;
+        document.getElementById('save').textContent = t.save;
+
+        document.getElementById('save').addEventListener('click', () => {
+          const clientId = document.getElementById('clientId').value.trim();
+          const clientSecret = document.getElementById('clientSecret').value.trim();
+
+          Homey.set('ttlockClientId', clientId, (setErr) => {
+            if (setErr) return Homey.alert(setErr);
+
+            Homey.set('ttlockClientSecret', clientSecret, (setErr2) => {
+              if (setErr2) return Homey.alert(setErr2);
+              Homey.alert(t.saved);
+            });
+          });
+        });
+      });
+
+      Homey.get('ttlockClientId', (err, value) => {
+        if (!err && value) document.getElementById('clientId').value = value;
+      });
+
+      Homey.get('ttlockClientSecret', (err, value) => {
+        if (!err && value) document.getElementById('clientSecret').value = value;
+      });
+
+      Homey.ready();
+    }
+  </script>
+</body>
+</html>

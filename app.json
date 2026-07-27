@@ -106,29 +106,5 @@
     "triggers": [],
     "conditions": [],
     "actions": []
-  },
-  "settings": [
-    {
-      "type": "text",
-      "id": "ttlockClientId",
-      "title": {
-        "en": "Client ID",
-        "da": "Klient-ID"
-      },
-      "hint": {
-        "en": "Register your own application at open.ttlock.com/manager to get a Client ID and Client Secret, then enter them here before pairing a lock. See the README for details.",
-        "da": "Registrer din egen applikation på open.ttlock.com/manager for at få et Klient-ID og en klient-hemmelighed, og indtast dem her, før du parrer en lås. Se README for detaljer."
-      },
-      "value": ""
-    },
-    {
-      "type": "password",
-      "id": "ttlockClientSecret",
-      "title": {
-        "en": "Client Secret",
-        "da": "Klient-hemmelighed"
-      },
-      "value": ""
-    }
-  ]
+  }
 }
