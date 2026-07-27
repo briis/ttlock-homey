@@ -1,7 +1,7 @@
 {
   "id": "com.briis.ttlock",
-  "version": "1.0.1",
-  "compatibility": ">=5.0.0",
+  "version": "1.1.0",
+  "compatibility": ">=12.2.0",
   "sdk": 3,
   "platforms": [
     "local",
@@ -62,8 +62,28 @@
       "capabilities": [
         "locked",
         "measure_battery",
-        "alarm_battery"
+        "alarm_battery",
+        "measure_signal_strength",
+        "onoff.autolock",
+        "onoff.lock_sound",
+        "passage_mode_enabled",
+        "last_operator",
+        "last_trigger"
       ],
+      "capabilitiesOptions": {
+        "onoff.autolock": {
+          "title": {
+            "en": "Auto Lock",
+            "da": "Automatisk lås"
+          }
+        },
+        "onoff.lock_sound": {
+          "title": {
+            "en": "Lock Sound",
+            "da": "Låselyd"
+          }
+        }
+      },
       "energy": {
         "batteries": [
           "OTHER"
@@ -102,9 +122,59 @@
       ]
     }
   ],
+  "capabilities": {
+    "last_operator": {
+      "type": "string",
+      "title": {
+        "en": "Last Operator",
+        "da": "Sidste bruger"
+      },
+      "desc": {
+        "en": "Who last locked or unlocked the lock, from the most recent webhook event",
+        "da": "Hvem der senest låste eller låste låsen op, fra den seneste webhook-hændelse"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "last_trigger": {
+      "type": "string",
+      "title": {
+        "en": "Last Trigger",
+        "da": "Seneste hændelse"
+      },
+      "desc": {
+        "en": "What triggered the most recent lock event, e.g. \"unlock by app\" or \"auto lock\"",
+        "da": "Hvad der udløste den seneste hændelse, f.eks. \"unlock by app\" eller \"auto lock\""
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "passage_mode_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Passage Mode",
+        "da": "Gennemgangstilstand"
+      },
+      "desc": {
+        "en": "Whether passage mode (the lock stays unlocked) is enabled",
+        "da": "Om gennemgangstilstand (låsen forbliver ulåst) er aktiveret"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    }
+  },
   "flow": {
     "triggers": [],
     "conditions": [],
     "actions": []
+  },
+  "api": {
+    "getWebhookUrl": {
+      "method": "GET",
+      "path": "/webhook-url"
+    }
   }
 }
