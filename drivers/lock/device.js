@@ -28,11 +28,20 @@ const FEATURE_DOOR_SENSOR = 1 << 13;
 const MIGRATED_CAPABILITIES = [
   'alarm_battery',
   'measure_signal_strength',
-  'onoff.autolock',
-  'onoff.lock_sound',
+  'autolock_enabled',
+  'lock_sound_enabled',
   'passage_mode_enabled',
   'last_operator',
   'last_trigger',
+];
+
+// `onoff.*` capability instances make Homey's device tile toggle-able from
+// that capability instead of `locked` (see athombv/homey-apps-sdk-issues#36),
+// which is why these were replaced with custom boolean capabilities. Drop the
+// old ones from already-paired devices so the tile stops being bound to them.
+const LEGACY_CAPABILITIES = [
+  'onoff.autolock',
+  'onoff.lock_sound',
 ];
 
 function hasFeature(featureValueHex, bit) {
@@ -49,9 +58,15 @@ module.exports = class TTLockDevice extends OAuth2Device {
       }
     }
 
+    for (const capability of LEGACY_CAPABILITIES) {
+      if (this.hasCapability(capability)) {
+        await this.removeCapability(capability);
+      }
+    }
+
     this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
-    this.registerCapabilityListener('onoff.autolock', this.onCapabilityAutoLock.bind(this));
-    this.registerCapabilityListener('onoff.lock_sound', this.onCapabilityLockSound.bind(this));
+    this.registerCapabilityListener('autolock_enabled', this.onCapabilityAutoLock.bind(this));
+    this.registerCapabilityListener('lock_sound_enabled', this.onCapabilityLockSound.bind(this));
 
     await this.syncState().catch((err) => this.error('Failed to fetch initial lock state', err));
     this._pollInterval = this.homey.setInterval(() => {
@@ -145,11 +160,11 @@ module.exports = class TTLockDevice extends OAuth2Device {
     }
 
     if (typeof detail.autoLockTime === 'number') {
-      await this.setCapabilityValue('onoff.autolock', detail.autoLockTime > 0);
+      await this.setCapabilityValue('autolock_enabled', detail.autoLockTime > 0);
     }
 
     if (detail.lockSound === ON_OFF_ON || detail.lockSound === ON_OFF_OFF) {
-      await this.setCapabilityValue('onoff.lock_sound', detail.lockSound === ON_OFF_ON);
+      await this.setCapabilityValue('lock_sound_enabled', detail.lockSound === ON_OFF_ON);
     }
 
     if (detail.passageMode === ON_OFF_ON || detail.passageMode === ON_OFF_OFF) {

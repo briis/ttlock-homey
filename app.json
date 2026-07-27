@@ -64,26 +64,12 @@
         "measure_battery",
         "alarm_battery",
         "measure_signal_strength",
-        "onoff.autolock",
-        "onoff.lock_sound",
+        "autolock_enabled",
+        "lock_sound_enabled",
         "passage_mode_enabled",
         "last_operator",
         "last_trigger"
       ],
-      "capabilitiesOptions": {
-        "onoff.autolock": {
-          "title": {
-            "en": "Auto Lock",
-            "da": "Automatisk lås"
-          }
-        },
-        "onoff.lock_sound": {
-          "title": {
-            "en": "Lock Sound",
-            "da": "Låselyd"
-          }
-        }
-      },
       "energy": {
         "batteries": [
           "OTHER"
@@ -123,6 +109,34 @@
     }
   ],
   "capabilities": {
+    "autolock_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Auto Lock",
+        "da": "Automatisk lås"
+      },
+      "desc": {
+        "en": "Whether the lock automatically locks itself a few seconds after being unlocked",
+        "da": "Om låsen automatisk låser sig selv nogle sekunder efter at være blevet låst op"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle"
+    },
+    "lock_sound_enabled": {
+      "type": "boolean",
+      "title": {
+        "en": "Lock Sound",
+        "da": "Låselyd"
+      },
+      "desc": {
+        "en": "Whether the lock plays a sound when operated",
+        "da": "Om låsen afspiller en lyd, når den betjenes"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle"
+    },
     "last_operator": {
       "type": "string",
       "title": {
@@ -135,7 +149,8 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/last_operator.svg"
     },
     "last_trigger": {
       "type": "string",
@@ -149,7 +164,8 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/last_trigger.svg"
     },
     "passage_mode_enabled": {
       "type": "boolean",
@@ -163,7 +179,8 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/passage_mode.svg"
     }
   },
   "flow": {
