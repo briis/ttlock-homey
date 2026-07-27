@@ -1,7 +1,7 @@
 {
-  "name": "homey-app-template",
+  "name": "com.briis.ttlock",
   "version": "1.0.0",
-  "description": "A template for developing Homey apps",
+  "description": "Control and monitor your TTLock smart locks",
   "main": "app.js",
   "license": "MIT",
   "private": true,

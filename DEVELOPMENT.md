@@ -15,34 +15,22 @@ locking/unlocking and battery level, via polling.
    npm install
    ```
 
-2. Register a TTLock cloud application at [open.ttlock.com/manager](https://open.ttlock.com/manager)
-   to get a `client_id`/`client_secret` (manual approval, can take a few days). This is a
-   **developer application**, registered once by the app maintainer, separate from any end user's
-   TTLock mobile app account.
-3. Copy `env.json.example` to `env.json` and fill in `TTLOCK_CLIENT_ID`/`TTLOCK_CLIENT_SECRET`
-   from step 2. This file is gitignored and never committed — it only needs to exist locally, on
-   the machine running the `homey` CLI commands below.
-4. Log in to the Homey CLI and start development:
+2. Register your own TTLock cloud application at
+   [open.ttlock.com/manager](https://open.ttlock.com/manager) to get a `client_id`/`client_secret`
+   (manual approval, can take a few days). Unlike a typical OAuth2 integration, this app does
+   **not** ship with a maintainer-registered client shared by every user — TTLock's Open Platform
+   application is per-developer, and each Homey user registers their own and enters it into the
+   app's Settings (see [README.md](README.md#creating-a-ttlock-oauth-app)) before pairing a lock.
+   For local development you need one too, for testing.
+3. Log in to the Homey CLI and start development:
 
    ```bash
    npx homey login
    npx homey app run
    ```
 
-   `homey app run`/`homey app install` read `env.json` locally and send those values to the target
-   Homey for that session/install — they're never written into the app's source files or the
-   packaged app bundle.
-5. When ready to release, `npx homey app publish` (see [Useful commands](#useful-commands) below)
-   again reads `env.json` locally and submits the values alongside the build to Athom, who store
-   them securely and inject them into every user's installation of that published version. This is
-   the same one-time step for every future version bump — end users never see or configure
-   `client_id`/`client_secret` themselves, only their own TTLock login during pairing.
-
-Still using placeholder values from the original template — replace before publishing:
-
-| Placeholder | Location | Replace with |
-| --- | --- | --- |
-| `homey-app-template` | `package.json` (`name`) | your app's package name |
+4. Once the app is running, open its Settings in the Homey app and enter your Client ID/Secret
+   from step 2, then pair a lock as any user would.
 
 ## Project structure
 
@@ -53,8 +41,7 @@ Still using placeholder values from the original template — replace before pub
 ├── assets/                 # App icon and store images
 ├── drivers/                # Device drivers (drivers/lock/ is the TTLock lock driver)
 ├── locales/                # Translations, e.g. locales/en.json
-├── .homeychangelog.json    # Per-version changelog shown in the Homey app store
-└── env.json.example        # Template for secrets used via Homey.env (copy to env.json)
+└── .homeychangelog.json    # Per-version changelog shown in the Homey app store
 ```
 
 ## Adding a driver
