@@ -32,8 +32,11 @@
   "contributing": {
     "donate": {
       "paypal": {
-        "username": ""
-      }
+        "username": "bjarne@briis.com"
+      },
+       "githubSponsors": {
+         "username": "briis"
+       }
     }
   },
   "bugs": {
@@ -58,7 +61,8 @@
       ],
       "capabilities": [
         "locked",
-        "measure_battery"
+        "measure_battery",
+        "alarm_battery"
       ],
       "energy": {
         "batteries": [
