@@ -65,14 +65,21 @@ module.exports = class TTLockDevice extends OAuth2Device {
 
   async onCapabilityLocked(locked) {
     const { id } = this.getData();
+    const command = locked ? this.oAuth2Client.lock(id) : this.oAuth2Client.unlock(id);
 
-    if (locked) {
-      await this.oAuth2Client.lock(id);
-    } else {
-      await this.oAuth2Client.unlock(id);
-    }
+    // TTLock's gateway/Bluetooth relay can take several seconds to confirm a
+    // command, and Homey shows the tile as "busy" for as long as this listener's
+    // promise is pending. Rather than block the UI on that relay round trip,
+    // resolve immediately and correct the capability value if it turns out the
+    // command actually failed.
+    command
+      .then(() => this.syncState())
+      .catch(async (err) => {
+        this.error('Lock command failed', err);
+        await this.setCapabilityValue('locked', !locked).catch(() => undefined);
+      });
 
-    await this.syncState();
+    await this.setCapabilityValue('locked', locked);
   }
 
   async onCapabilityAutoLock(enabled) {

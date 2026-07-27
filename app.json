@@ -1,6 +1,6 @@
 {
   "id": "com.briis.ttlock",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "platforms": [
@@ -34,9 +34,9 @@
       "paypal": {
         "username": "bjarne@briis.com"
       },
-       "githubSponsors": {
-         "username": "briis"
-       }
+      "githubSponsors": {
+        "username": "briis"
+      }
     }
   },
   "bugs": {

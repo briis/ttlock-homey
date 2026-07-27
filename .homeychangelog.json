@@ -1,5 +1,8 @@
 {
   "1.0.0": {
     "en": "Initial release."
+  },
+  "1.1.1": {
+    "en": "Lock/unlock tiles now update immediately instead of waiting on TTLock's gateway relay; fixed webhook registration for real-time sensor updates."
   }
 }

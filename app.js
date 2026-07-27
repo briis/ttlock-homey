@@ -44,7 +44,10 @@ module.exports = class TTLockApp extends OAuth2App {
 
   async onWebhookMessage(args) {
     const body = parseWebhookBody(args.body);
-    if (!body.records) return;
+    if (!body.records) {
+      this.log('Received webhook message without records', body);
+      return;
+    }
 
     let records;
     try {
@@ -53,6 +56,8 @@ module.exports = class TTLockApp extends OAuth2App {
       this.error('Failed to parse webhook records', err);
       return;
     }
+
+    this.log(`Received ${records.length} webhook record(s)`);
 
     const devices = this.homey.drivers.getDriver('lock').getDevices();
 
