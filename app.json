@@ -4,8 +4,7 @@
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "name": {
     "en": "TTLock",
@@ -53,8 +52,7 @@
       },
       "class": "lock",
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "connectivity": [
         "cloud"
