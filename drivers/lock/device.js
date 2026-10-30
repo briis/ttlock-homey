@@ -156,9 +156,35 @@ module.exports = class TTLockDevice extends OAuth2Device {
 
     await this.setCapabilityValue('last_trigger', description);
 
+    await this._fireFlowTriggers(record, action, description);
+
     if (typeof record.electricQuantity === 'number') {
       await this.setCapabilityValue('measure_battery', record.electricQuantity);
       await this.setCapabilityValue('alarm_battery', record.electricQuantity < BATTERY_LOW_THRESHOLD);
+    }
+  }
+
+  async _fireFlowTriggers(record, action, description) {
+    const { flow } = this.homey;
+
+    if (action === TTLockWebhookEvents.ACTION_LOCK || action === TTLockWebhookEvents.ACTION_UNLOCK) {
+      await flow.getDeviceTriggerCard('lock_operated').trigger(
+        this,
+        {
+          action: action === TTLockWebhookEvents.ACTION_LOCK ? 'locked' : 'unlocked',
+          operator: record.username || '',
+          method: description,
+        },
+        { action },
+      );
+    }
+
+    if (record.recordType === TTLockWebhookEvents.RECORD_TAMPER_ALERT) {
+      await flow.getDeviceTriggerCard('tamper_alert').trigger(this);
+    }
+
+    if (record.recordType === TTLockWebhookEvents.RECORD_INVALID_ATTEMPTS) {
+      await flow.getDeviceTriggerCard('invalid_attempts').trigger(this);
     }
   }
 

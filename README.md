@@ -12,6 +12,9 @@ flows — no extra hardware, no hub, just your existing TTLock account.
   connected to Homey.
 - ⚡ **Near-instant updates** via a webhook, instead of waiting for the next poll — see who last
   locked/unlocked the door and why, moments after it happens.
+- 🔔 **Flow triggers** — "Lock was locked/unlocked" (with operator and method tokens, e.g. who
+  unlocked the door and by fingerprint, passcode, etc.), "Tamper alert", and "Too many invalid
+  attempts". These need the webhook set up (see below).
 - 🔋 **Battery monitoring**, so you always know when it's time to change the batteries.
 - 📶 **Gateway signal strength**, so you can spot a lock that's drifting out of range.
 - 🚪 **Door sensor** support (open/closed), for locks that have one.

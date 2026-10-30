@@ -220,7 +220,125 @@
     }
   },
   "flow": {
-    "triggers": [],
+    "triggers": [
+      {
+        "id": "lock_operated",
+        "title": {
+          "en": "Lock was operated",
+          "da": "Låsen blev betjent"
+        },
+        "titleFormatted": {
+          "en": "Lock was [[action]]",
+          "da": "Låsen blev [[action]]"
+        },
+        "hint": {
+          "en": "Requires the TTLock webhook to be set up (see the app's Settings)."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          },
+          {
+            "type": "dropdown",
+            "name": "action",
+            "values": [
+              {
+                "id": "any",
+                "label": {
+                  "en": "locked or unlocked",
+                  "da": "låst eller låst op"
+                }
+              },
+              {
+                "id": "lock",
+                "label": {
+                  "en": "locked",
+                  "da": "låst"
+                }
+              },
+              {
+                "id": "unlock",
+                "label": {
+                  "en": "unlocked",
+                  "da": "låst op"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "action",
+            "type": "string",
+            "title": {
+              "en": "Action",
+              "da": "Handling"
+            },
+            "example": {
+              "en": "unlocked"
+            }
+          },
+          {
+            "name": "operator",
+            "type": "string",
+            "title": {
+              "en": "Operator",
+              "da": "Bruger"
+            },
+            "example": {
+              "en": "Anna"
+            }
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "title": {
+              "en": "Method",
+              "da": "Metode"
+            },
+            "example": {
+              "en": "unlock by fingerprint"
+            }
+          }
+        ]
+      },
+      {
+        "id": "tamper_alert",
+        "title": {
+          "en": "Tamper alert",
+          "da": "Manipulationsalarm"
+        },
+        "hint": {
+          "en": "Requires the TTLock webhook to be set up (see the app's Settings)."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "invalid_attempts",
+        "title": {
+          "en": "Too many invalid attempts",
+          "da": "For mange ugyldige forsøg"
+        },
+        "hint": {
+          "en": "The lock locked itself after too many invalid attempts. Requires the TTLock webhook."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      }
+    ],
     "conditions": [],
     "actions": []
   },
