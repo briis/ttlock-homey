@@ -1,6 +1,6 @@
 # TTLock for Homey
 
-![TTLock smart lock on a front door at dusk](assets/images/xlarge.png)
+![TTLock smart lock on a front door](assets/images/xlarge.png)
 
 **Control and monitor your TTLock smart locks.**
 
