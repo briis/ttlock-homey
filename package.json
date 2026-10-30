@@ -1,7 +1,7 @@
 {
   "name": "com.briis.ttlock",
   "version": "1.0.0",
-  "description": "Control and monitor your TTLock smart locks",
+  "description": "Your front door, in your flows.",
   "main": "app.js",
   "license": "MIT",
   "private": true,

@@ -12,13 +12,13 @@
     "da": "TTLock"
   },
   "description": {
-    "en": "Control and monitor your TTLock smart locks",
-    "da": "Styr og overvåg dine TTLock smarte låse"
+    "en": "Your front door, in your flows.",
+    "da": "Din hoveddør, i dine flows."
   },
   "category": [
     "security"
   ],
-  "brandColor": "#1DA1F2",
+  "brandColor": "#0A7AFF",
   "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
@@ -123,7 +123,7 @@
               },
               "hint": {
                 "en": "How often lock state is re-verified with TTLock. Webhooks deliver changes in real time, so this is only reconciliation. Lower values use more of TTLock's free 30,000 API calls/month.",
-                "da": "Hvor ofte låsestatus kontrolleres hos TTLock. Webhooks leverer ændringer i realtid, så dette er kun en afstemning. Lavere værdier bruger flere af TTLocks gratis 30.000 API-kald om måneden."
+                "da": "Hvor ofte låsestatus kontrolleres hos TTLock. Webhooks leverer ændringer i realtid, så dette kun er en kontrol. Lavere værdier bruger flere af TTLocks gratis 30.000 API-kald om måneden."
               },
               "value": 30,
               "min": 5,
@@ -212,11 +212,11 @@
       "type": "boolean",
       "title": {
         "en": "Passage Mode",
-        "da": "Gennemgangstilstand"
+        "da": "Passagetilstand"
       },
       "desc": {
         "en": "Whether passage mode (the lock stays unlocked) is enabled",
-        "da": "Om gennemgangstilstand (låsen forbliver ulåst) er aktiveret"
+        "da": "Om passagetilstand (låsen forbliver ulåst) er aktiveret"
       },
       "getable": true,
       "setable": false,

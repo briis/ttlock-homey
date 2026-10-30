@@ -66,6 +66,7 @@
 
   <script type="text/javascript">
     function onHomeyReady(Homey) {
+      const LINK = '<a href="https://open.ttlock.com/manager" target="_blank" rel="noopener">open.ttlock.com/manager</a>';
       const strings = {
         en: {
           title: 'TTLock OAuth App',
@@ -77,23 +78,37 @@
           webhookUnavailable: 'Not available in this build.',
           copy: 'Copy',
           copied: 'Copied!',
+          hint: 'Register your own application at '
+            + LINK
+            + ' to get a Client ID and Client Secret, then enter them below before pairing a lock. See the README for details.',
+          webhookHint: "Paste this URL into your TTLock application's callback URL field at "
+            + LINK
+            + ' to get near-instant lock/unlock updates, instead of waiting for the next poll.',
         },
         da: {
           title: 'TTLock OAuth-app',
           clientId: 'Klient-ID',
-          clientSecret: 'Klient-hemmelighed',
+          clientSecret: 'Klienthemmelighed',
           save: 'Gem',
           saved: 'Gemt',
           webhookTitle: 'Opdateringer i realtid',
           webhookUnavailable: 'Ikke tilgængelig i denne build.',
           copy: 'Kopiér',
           copied: 'Kopieret!',
+          hint: 'Registrér din egen applikation på '
+            + LINK
+            + ' for at få et Client ID og en Client Secret, og indtast dem herunder, før du parrer en lås. Se README for flere detaljer.',
+          webhookHint: 'Indsæt denne URL i feltet for callback-URL i din TTLock-applikation på '
+            + LINK
+            + ' for at få næsten øjeblikkelige opdateringer om låsning og oplåsning i stedet for at vente på næste kontrol.',
         },
       };
 
       Homey.getLanguage((err, language) => {
         const t = strings[language] || strings.en;
         document.getElementById('title').textContent = t.title;
+        document.getElementById('hint').innerHTML = t.hint;
+        document.getElementById('webhookHint').innerHTML = t.webhookHint;
         document.getElementById('clientIdLabel').textContent = t.clientId;
         document.getElementById('clientSecretLabel').textContent = t.clientSecret;
         document.getElementById('save').textContent = t.save;
