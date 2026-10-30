@@ -4,5 +4,8 @@
   },
   "1.1.1": {
     "en": "Lock/unlock tiles now update immediately instead of waiting on TTLock's gateway relay; fixed webhook registration for real-time sensor updates."
+  },
+  "1.1.2": {
+    "en": "Reduced TTLock API usage with tiered polling: lock state is re-checked every 30 minutes and battery/settings every 6 hours (both adjustable in device settings), keeping multi-lock accounts within the free API quota."
   }
 }

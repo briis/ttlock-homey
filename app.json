@@ -1,6 +1,6 @@
 {
   "id": "com.briis.ttlock",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "platforms": [
@@ -104,6 +104,42 @@
         {
           "id": "login_credentials",
           "template": "login_credentials"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling"
+          },
+          "children": [
+            {
+              "id": "poll_interval",
+              "type": "number",
+              "label": {
+                "en": "Lock state check interval (minutes)"
+              },
+              "hint": {
+                "en": "How often lock state is re-verified with TTLock. Webhooks deliver changes in real time, so this is only reconciliation. Lower values use more of TTLock's free 30,000 API calls/month."
+              },
+              "value": 30,
+              "min": 5,
+              "max": 1440
+            },
+            {
+              "id": "slow_poll_interval",
+              "type": "number",
+              "label": {
+                "en": "Battery & settings refresh interval (hours)"
+              },
+              "hint": {
+                "en": "How often battery, auto-lock, lock sound, passage mode and gateway signal are refreshed."
+              },
+              "value": 6,
+              "min": 1,
+              "max": 168
+            }
+          ]
         }
       ]
     }

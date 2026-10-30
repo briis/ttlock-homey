@@ -47,8 +47,9 @@ account with that lock already added in the TTLock app, and your own TTLock OAut
 
 ## Getting near-instant updates (optional)
 
-By default the app polls TTLock every 5 minutes, so lock state, battery, and other settings can
-take a few minutes to show up in Homey. For near-instant updates instead, wire up TTLock's webhook:
+By default the app re-checks lock state every 30 minutes (battery and other settings every 6 hours;
+both adjustable in the device settings) to stay within TTLock's free API quota, so changes can
+take a while to show up in Homey. For near-instant updates instead, wire up TTLock's webhook:
 
 1. Open the app's Settings in Homey — under "Real-time updates" you'll find your webhook URL.
 2. Go back to [open.ttlock.com/manager](https://open.ttlock.com/manager), open your application,
@@ -56,7 +57,7 @@ take a few minutes to show up in Homey. For near-instant updates instead, wire u
 3. Lock or unlock the door (from the TTLock app, a keypad, fingerprint, etc.) and the lock's state,
    "Last Operator", and "Last Trigger" should update in Homey within a couple of seconds.
 
-Without this step everything still works, just on the slower 5-minute poll.
+Without this step everything still works, just on the slower poll.
 
 ## Getting help
 

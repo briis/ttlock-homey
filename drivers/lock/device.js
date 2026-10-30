@@ -3,7 +3,16 @@
 const { OAuth2Device } = require('homey-oauth2app');
 const TTLockWebhookEvents = require('../../lib/TTLockWebhookEvents');
 
-const POLL_INTERVAL = 5 * 60 * 1000;
+// Polling is split in two tiers to stay within TTLock's free-tier API budget
+// (30k calls/month). The fast tier re-verifies lock state (1 call) every poll;
+// the slow tier refreshes lock detail and gateway link (battery, auto-lock,
+// sound, passage mode, signal) at most once per slow interval. Webhooks carry
+// real-time changes, so the poll is mostly reconciliation. Both are tunable
+// per device in the device settings.
+const DEFAULT_POLL_MINUTES = 30;
+const DEFAULT_SLOW_POLL_HOURS = 6;
+const MINUTE_MS = 60 * 1000;
+const HOUR_MS = 60 * MINUTE_MS;
 const BATTERY_LOW_THRESHOLD = 20;
 const AUTO_LOCK_ON_SECONDS = 10;
 
@@ -69,13 +78,35 @@ module.exports = class TTLockDevice extends OAuth2Device {
     this.registerCapabilityListener('lock_sound_enabled', this.onCapabilityLockSound.bind(this));
 
     await this.syncState().catch((err) => this.error('Failed to fetch initial lock state', err));
-    this._pollInterval = this.homey.setInterval(() => {
-      this.syncState().catch((err) => this.error('Failed to poll lock state', err));
-    }, POLL_INTERVAL);
+    this._startPolling();
   }
 
   async onOAuth2Uninit() {
     this.homey.clearInterval(this._pollInterval);
+  }
+
+  _startPolling() {
+    this.homey.clearInterval(this._pollInterval);
+    const minutes = this.getSetting('poll_interval') || DEFAULT_POLL_MINUTES;
+    this._pollInterval = this.homey.setInterval(() => {
+      this.syncState().catch((err) => this.error('Failed to poll lock state', err));
+    }, minutes * MINUTE_MS);
+  }
+
+  async onSettings({ changedKeys }) {
+    // Restart on the next tick so getSetting() returns the new values, and
+    // force a full refresh so the new slow cadence applies immediately.
+    if (changedKeys.includes('poll_interval') || changedKeys.includes('slow_poll_interval')) {
+      this.homey.setTimeout(() => {
+        this._startPolling();
+        this._slowLastFetched = null;
+      }, 0);
+    }
+  }
+
+  _slowTierDue() {
+    const hours = this.getSetting('slow_poll_interval') || DEFAULT_SLOW_POLL_HOURS;
+    return !this._slowLastFetched || Date.now() - this._slowLastFetched >= hours * HOUR_MS;
   }
 
   async onCapabilityLocked(locked) {
@@ -100,13 +131,13 @@ module.exports = class TTLockDevice extends OAuth2Device {
   async onCapabilityAutoLock(enabled) {
     const { id } = this.getData();
     await this.oAuth2Client.setAutoLockTime(id, enabled ? AUTO_LOCK_ON_SECONDS : 0);
-    await this.syncState();
+    await this.syncState({ force: true });
   }
 
   async onCapabilityLockSound(enabled) {
     const { id } = this.getData();
     await this.oAuth2Client.setLockSound(id, enabled);
-    await this.syncState();
+    await this.syncState({ force: true });
   }
 
   // Called by the app-level webhook listener with a single decoded TTLock
@@ -131,14 +162,23 @@ module.exports = class TTLockDevice extends OAuth2Device {
     }
   }
 
-  async syncState() {
+  async syncState({ force = false } = {}) {
     const { id } = this.getData();
+    const slowDue = force || this._slowTierDue();
 
+    // Fast tier: lock/door state, every poll. Slow tier: detail + gateway,
+    // fetched only when due and otherwise carried forward (capability values
+    // persist, and the door-sensor feature flag is cached).
     const [state, detail, gateways] = await Promise.all([
       this.oAuth2Client.getLockState(id),
-      this.oAuth2Client.getLockDetail(id),
-      this.oAuth2Client.getGatewaysForLock(id).catch(() => []),
+      slowDue ? this.oAuth2Client.getLockDetail(id) : null,
+      slowDue ? this.oAuth2Client.getGatewaysForLock(id).catch(() => []) : null,
     ]);
+
+    if (detail) {
+      this._slowLastFetched = Date.now();
+      this._hasDoorSensor = hasFeature(detail.featureValue, FEATURE_DOOR_SENSOR);
+    }
 
     if (state.state === STATE_LOCKED || state.state === STATE_UNLOCKED) {
       await this.setCapabilityValue('locked', state.state === STATE_LOCKED);
@@ -146,13 +186,15 @@ module.exports = class TTLockDevice extends OAuth2Device {
 
     if (
       (state.sensorState === SENSOR_STATE_OPENED || state.sensorState === SENSOR_STATE_CLOSED)
-      && hasFeature(detail.featureValue, FEATURE_DOOR_SENSOR)
+      && (this._hasDoorSensor || this.hasCapability('alarm_contact'))
     ) {
       if (!this.hasCapability('alarm_contact')) {
         await this.addCapability('alarm_contact');
       }
       await this.setCapabilityValue('alarm_contact', state.sensorState === SENSOR_STATE_OPENED);
     }
+
+    if (!detail) return;
 
     if (typeof detail.electricQuantity === 'number') {
       await this.setCapabilityValue('measure_battery', detail.electricQuantity);

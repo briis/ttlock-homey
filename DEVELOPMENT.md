@@ -5,7 +5,7 @@ on your Homey, see [README.md](README.md) instead.
 
 TTLock for Homey talks to TTLock's cloud API (the same API used by
 [hass-ttlock](https://github.com/jbergler/hass-ttlock) for Home Assistant): locking/unlocking,
-battery, gateway signal, door sensor, auto-lock, lock sound, and passage mode, via a 5-minute poll
+battery, gateway signal, door sensor, auto-lock, lock sound, and passage mode, via a tiered poll (30 min state, 6 h detail)
 plus a TTLock webhook for near-instant updates.
 
 ## Maintaining / publishing this app
