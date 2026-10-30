@@ -1,0 +1,132 @@
+name: Bug report
+description: Report a problem with the app
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping to improve TTLock for Homey. The details below make it much easier to reproduce problems.
+
+        **Never paste your Client Secret, passwords or access tokens** into this issue. Remove them from any logs before posting.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: What went wrong? Include what you saw in Homey and in the TTLock app, if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the lock tile
+        2. Tap ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the app is affected?
+      options:
+        - Pairing / login
+        - Lock / unlock
+        - Lock state not updating
+        - Battery / signal strength
+        - Door sensor
+        - Auto Lock / Lock Sound / Passage Mode
+        - Flow cards (triggers, conditions, actions)
+        - Webhook / real-time updates
+        - Settings / polling intervals
+        - Something else
+    validations:
+      required: true
+  - type: dropdown
+    id: homey
+    attributes:
+      label: Homey platform
+      options:
+        - Homey Pro (2023)
+        - Homey Pro (Early 2019)
+        - Homey Pro mini
+        - Homey Self-Hosted Server
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Homey firmware version
+      placeholder: e.g. 12.2.0
+    validations:
+      required: true
+  - type: input
+    id: app_version
+    attributes:
+      label: TTLock app version
+      description: Find it in Homey under More > Apps > TTLock.
+      placeholder: e.g. 1.1.4
+    validations:
+      required: true
+  - type: input
+    id: lock_model
+    attributes:
+      label: Lock brand and model
+      description: As shown in the TTLock app, e.g. the lock's name and manufacturer.
+      placeholder: e.g. Zafe, keypad and fingerprint lock with lever handle
+    validations:
+      required: true
+  - type: dropdown
+    id: gateway
+    attributes:
+      label: Is the lock connected through a TTLock Gateway?
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: true
+  - type: dropdown
+    id: door_sensor
+    attributes:
+      label: Does the lock have a door sensor?
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+  - type: dropdown
+    id: webhook
+    attributes:
+      label: Have you set up the TTLock webhook (real-time updates)?
+      description: The webhook URL is shown in the app's Settings. Without it, the app only polls.
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: true
+  - type: input
+    id: polling
+    attributes:
+      label: Polling intervals (if you changed them)
+      description: The lock's device settings have a state check interval and a battery/settings refresh interval. Leave empty if you kept the defaults (30 minutes and 6 hours).
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        App logs from the Homey Developer Tools (log tab for the app), from around the time of the problem. Remove any secrets or tokens first.
+      render: text
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, flows involved, or anything else that might help.
