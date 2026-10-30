@@ -2,27 +2,80 @@
 
 ![TTLock smart lock on a front door at dusk](assets/images/xlarge.png)
 
-Control your [TTLock](https://www.ttlock.com/) smart locks straight from Homey. Lock and unlock
-your door, keep an eye on the battery level, and bring your existing TTLock locks into your Homey
-flows — no extra hardware, no hub, just your existing TTLock account.
+**Control and monitor your TTLock smart locks.**
 
-## Features
+Lock and unlock your door from Homey, keep an eye on the battery, and see who opened it and how —
+no extra hardware, no hub, just your existing [TTLock](https://www.ttlock.com/) account. If it
+works in the TTLock app, it shows up here.
 
-- 🔒 **Lock & unlock** your TTLock door locks from the Homey app, Homey flows, or voice assistants
-  connected to Homey.
-- ⚡ **Near-instant updates** via a webhook, instead of waiting for the next poll — see who last
-  locked/unlocked the door and why, moments after it happens.
-- 🔔 **Flow triggers** — "Lock was locked/unlocked" (with operator and method tokens, e.g. who
-  unlocked the door and by fingerprint, passcode, etc.), "Tamper alert", and "Too many invalid
-  attempts". These need the webhook set up (see below).
-- 🔋 **Battery monitoring**, so you always know when it's time to change the batteries.
-- 📶 **Gateway signal strength**, so you can spot a lock that's drifting out of range.
-- 🚪 **Door sensor** support (open/closed), for locks that have one.
-- 🔁 **Auto Lock** and **Lock Sound** toggles, and a read-only **Passage Mode** indicator.
-- 👪 **Uses your own TTLock account** — no extra app. If it works in the TTLock app, it'll show up
-  here.
-- ☁️ Works over the cloud via the official TTLock API, the same connection used by TTLock's own
-  app, so there's nothing extra to install on your TTLock hardware.
+Build flows around your door: turn on the hallway light when someone unlocks it with a fingerprint,
+get a notification when the lock raises a tamper alert, or lock up automatically when everyone has
+left. It works over TTLock's official cloud API, so there's nothing to install on your lock.
+
+## Supported devices
+
+TTLock smart door locks connected to a TTLock Gateway (Wi-Fi or Ethernet), added to your TTLock
+account in the TTLock app.
+
+| Capability | Details |
+| --- | --- |
+| 🔒 Lock / unlock | From the Homey app, flows, or voice assistants connected to Homey |
+| 🔋 Battery | Level and low-battery alarm |
+| 📶 Gateway signal | Signal strength, to spot a lock drifting out of range |
+| 🚪 Door sensor | Open/closed, for locks that have one |
+| 🔁 Auto Lock, Lock Sound | Toggles; plus a read-only Passage Mode indicator |
+| 👤 Last operator & trigger | Who last locked/unlocked and how (needs the webhook) |
+
+## Flow cards
+
+The three triggers — *Lock was…*, *Tamper alert* and *Too many invalid
+attempts* — only fire when the [TTLock webhook](#getting-near-instant-updates-optional) is set up.
+
+**When…**
+
+<p>
+<img src="assets/flow/when-01.svg" width="280" alt="Locked">
+<img src="assets/flow/when-02.svg" width="280" alt="Unlocked">
+<img src="assets/flow/when-03.svg" width="280" alt="Lock was …">
+<img src="assets/flow/when-04.svg" width="280" alt="Tamper alert">
+<img src="assets/flow/when-05.svg" width="280" alt="Too many invalid attempts">
+<img src="assets/flow/when-06.svg" width="280" alt="Battery alarm turned on">
+<img src="assets/flow/when-07.svg" width="280" alt="Battery alarm turned off">
+<img src="assets/flow/when-08.svg" width="280" alt="Battery level changed">
+<img src="assets/flow/when-09.svg" width="280" alt="Battery became greater than % %">
+<img src="assets/flow/when-10.svg" width="280" alt="Battery became less than % %">
+<img src="assets/flow/when-11.svg" width="280" alt="Signal strength changed">
+<img src="assets/flow/when-12.svg" width="280" alt="Signal strength became greater than dB dB">
+<img src="assets/flow/when-13.svg" width="280" alt="Signal strength became less than dB dB">
+<img src="assets/flow/when-14.svg" width="280" alt="Locked for Duration …">
+<img src="assets/flow/when-15.svg" width="280" alt="Unlocked for Duration …">
+<img src="assets/flow/when-16.svg" width="280" alt="Battery alarm turned on for Duration …">
+<img src="assets/flow/when-17.svg" width="280" alt="Battery alarm turned off for Duration …">
+<img src="assets/flow/when-18.svg" width="280" alt="Battery greater than % % for Duration">
+<img src="assets/flow/when-19.svg" width="280" alt="Battery less than % % for Duration">
+<img src="assets/flow/when-20.svg" width="280" alt="Signal greater than dB dB for Duration">
+<img src="assets/flow/when-21.svg" width="280" alt="Signal less than dB dB for Duration">
+</p>
+
+**And…**
+
+<p>
+<img src="assets/flow/and-01.svg" width="280" alt="A lock has been locked">
+<img src="assets/flow/and-02.svg" width="280" alt="Battery alarm is on">
+<img src="assets/flow/and-03.svg" width="280" alt="Battery is exactly Value">
+<img src="assets/flow/and-04.svg" width="280" alt="Battery is less than Number">
+<img src="assets/flow/and-05.svg" width="280" alt="Battery is greater than Number">
+<img src="assets/flow/and-06.svg" width="280" alt="Signal strength is exactly Value">
+<img src="assets/flow/and-07.svg" width="280" alt="Signal strength is less than Number">
+<img src="assets/flow/and-08.svg" width="280" alt="Signal strength is greater than Number">
+</p>
+
+**Then…**
+
+<p>
+<img src="assets/flow/then-01.svg" width="280" alt="Unlock">
+<img src="assets/flow/then-02.svg" width="280" alt="Lock">
+</p>
 
 ## Creating a TTLock OAuth app
 
@@ -65,7 +118,7 @@ take a while to show up in Homey. For near-instant updates instead, wire up TTLo
 
 Without this step everything still works, just on the slower poll.
 
-## Getting help
+## Support
 
 Found a bug or have a feature request? Please open an issue on the
 [GitHub issue tracker](https://github.com/briis/ttlock-homey/issues).

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="533" height="100" viewBox="0 0 533 100" font-family="Roboto, -apple-system, Helvetica, Arial, sans-serif">
+<defs><filter id="s" x="-5%" y="-10%" width="110%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#000" flood-opacity="0.12"/></filter></defs>
+<rect x="8" y="8" width="517" height="84" rx="14" fill="#fff" filter="url(#s)"/>
+<circle cx="50" cy="50.0" r="26" fill="#4caf50"/>
+<text x="50" y="56.0" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">+−</text>
+<text x="90" y="38" font-size="14" fill="#7a7f87">Logic</text>
+<rect x="90" y="46" width="193.5" height="28" rx="14" fill="#4a9fe8"/><text x="186.75" y="66" text-anchor="middle" font-size="17" font-weight="600" fill="#fff"># Signal strength</text>
+<text x="291.5" y="66" font-size="19" fill="#1c1e21">is less than</text>
+<rect x="412.7" y="48" width="68" height="24" rx="12" fill="#fff" stroke="#c9ccd1"/><text x="446.7" y="64" text-anchor="middle" font-size="13" fill="#6b7078">Number</text>
+</svg>
