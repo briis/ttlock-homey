@@ -41,6 +41,9 @@ Home Assistant integration, if you've set that up before):
    app.
 5. Pick the lock(s) you want to add and finish the pairing wizard. That's it — your locks are now
    ready to use in Homey, including in flows.
+6. *(Optional)* To lock and unlock by tapping the device tile, open the lock's settings in Homey
+   and set **Quick Action** to **Locked**. Homey doesn't preselect one for locks, so by default
+   the tile does nothing when tapped.
 
 **Requirements:** a TTLock smart lock connected to a TTLock Gateway (Wi-Fi or Ethernet), a TTLock
 account with that lock already added in the TTLock app, and your own TTLock OAuth app (see above).
