@@ -110,17 +110,20 @@
         {
           "type": "group",
           "label": {
-            "en": "Polling"
+            "en": "Polling",
+            "da": "Opdatering"
           },
           "children": [
             {
               "id": "poll_interval",
               "type": "number",
               "label": {
-                "en": "Lock state check interval (minutes)"
+                "en": "Lock state check interval (minutes)",
+                "da": "Interval for kontrol af låsestatus (minutter)"
               },
               "hint": {
-                "en": "How often lock state is re-verified with TTLock. Webhooks deliver changes in real time, so this is only reconciliation. Lower values use more of TTLock's free 30,000 API calls/month."
+                "en": "How often lock state is re-verified with TTLock. Webhooks deliver changes in real time, so this is only reconciliation. Lower values use more of TTLock's free 30,000 API calls/month.",
+                "da": "Hvor ofte låsestatus kontrolleres hos TTLock. Webhooks leverer ændringer i realtid, så dette er kun en afstemning. Lavere værdier bruger flere af TTLocks gratis 30.000 API-kald om måneden."
               },
               "value": 30,
               "min": 5,
@@ -130,10 +133,12 @@
               "id": "slow_poll_interval",
               "type": "number",
               "label": {
-                "en": "Battery & settings refresh interval (hours)"
+                "en": "Battery & settings refresh interval (hours)",
+                "da": "Interval for opdatering af batteri og indstillinger (timer)"
               },
               "hint": {
-                "en": "How often battery, auto-lock, lock sound, passage mode and gateway signal are refreshed."
+                "en": "How often battery, auto-lock, lock sound, passage mode and gateway signal are refreshed.",
+                "da": "Hvor ofte batteri, automatisk lås, låselyd, passagetilstand og gateway-signal opdateres."
               },
               "value": 6,
               "min": 1,
@@ -232,7 +237,8 @@
           "da": "Låsen blev [[action]]"
         },
         "hint": {
-          "en": "Requires the TTLock webhook to be set up (see the app's Settings)."
+          "en": "Requires the TTLock webhook to be set up (see the app's Settings).",
+          "da": "Kræver at TTLock-webhook er sat op (se appens indstillinger)."
         },
         "args": [
           {
@@ -311,7 +317,8 @@
           "da": "Manipulationsalarm"
         },
         "hint": {
-          "en": "Requires the TTLock webhook to be set up (see the app's Settings)."
+          "en": "Requires the TTLock webhook to be set up (see the app's Settings).",
+          "da": "Kræver at TTLock-webhook er sat op (se appens indstillinger)."
         },
         "args": [
           {
@@ -328,7 +335,8 @@
           "da": "For mange ugyldige forsøg"
         },
         "hint": {
-          "en": "The lock locked itself after too many invalid attempts. Requires the TTLock webhook."
+          "en": "The lock locked itself after too many invalid attempts. Requires the TTLock webhook.",
+          "da": "Låsen låste sig selv efter for mange ugyldige forsøg. Kræver TTLock-webhook."
         },
         "args": [
           {
