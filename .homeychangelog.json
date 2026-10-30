@@ -10,5 +10,8 @@
   },
   "1.1.3": {
     "en": "Fixed the app icon not showing in the App Store, and targeted Homey Pro only."
+  },
+  "1.1.4": {
+    "en": "Redrawn app icon as an outline so it displays correctly in the App Store."
   }
 }
