@@ -7,5 +7,8 @@
   },
   "1.1.2": {
     "en": "Reduced TTLock API usage with tiered polling: lock state is re-checked every 30 minutes and battery/settings every 6 hours (both adjustable in device settings), keeping multi-lock accounts within the free API quota. Added flow triggers: lock was locked/unlocked (with operator and method), tamper alert, and too many invalid attempts."
+  },
+  "1.1.3": {
+    "en": "Fixed the app icon not showing in the App Store, and targeted Homey Pro only."
   }
 }
